@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<header>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+		<title>Website</title>
+		<meta charset="UTF-8">
+	</header>
+	<body>
+		<h1 id="first">Website</h1>
+		<p>This website was created by me (Zain Eazad) in html to build my resume for this<br> 
+		front-end developer position.</p>
+		<p>A portfolio that includes this project as well as other projects of mine can be found  
+		<a target="blank" href="https://github.com/zeazad-hub/Portfolio">here</a>.</p>
+		<div style="text-align: center">
+			<button onclick="myFunc();">Click here to change the top header.</button>
+		</div>
+		<script>
+			function myFunc() {
+				var elem = document.getElementById("first");
+				if(elem.style.color.localeCompare('blue') !== 0) {
+					elem.outerHTML = '<h2 id="first">' + elem.innerHTML + '</h2>';
+					elem = document.getElementById("first");
+					elem.style.color = 'blue'
+				}
+				else {
+					elem.outerHTML = '<h1 id="first">' + elem.innerHTML + '</h1>';
+				} 
+			}
+		</script>
+	</body>
+</html>
