@@ -9,10 +9,10 @@ class MethodReader {
     private:
     //All of the valid options for the path of
     //a request.
-    string options[4] = {"/api/",
-                        "/api/queue/",
-                        "/api/queue/tail/",
-                        "/api/queue/head/"};
+    const string options[4] = {"/api/",
+                               "/api/queue/",
+                               "/api/queue/tail/",
+                               "/api/queue/head/"};
 
     //Holds the location, position, and uniqname of one person in the office
     //hours queue.
@@ -47,7 +47,7 @@ class MethodReader {
     //MODIFIES: nothing
     //EFFECTS: Prints out the response for a GET request
     //to cout
-    void get_response(string path, string vers) {
+    void get_response(const string& path, const string& vers) {
         cout << vers << " " << 200 << " OK" << endl;
         cout << "Content-Type: application/json; charset=utf-8" << endl;
         json j2;
@@ -81,7 +81,7 @@ class MethodReader {
     //MODIFIES: nothing
     //EFFECTS: Prints out the response for a POST request
     //to cout
-    void post_response(string vers, json j) {
+    void post_response(const string& vers, json& j) {
         cin >> j;
         int pos = q.size() + 1;
         hold h = {j["location"], pos, j["uniqname"]};
@@ -101,7 +101,7 @@ class MethodReader {
         cout << s;
     }
 
-    void delete_response(string vers) {
+    void delete_response(const string& vers) {
         q.pop_front();
         cout << vers << " " << 204 << " No Content" << endl;
         cout << "Content-Type: application/json; charset=utf-8" << endl;
@@ -118,7 +118,7 @@ class MethodReader {
     //MODIFIES: nothing
     //EFFECTS: prints an error message to cout if the request
     //is not valid
-    bool check_fail(string& meth, string& path, string& vers) {
+    bool check_fail(const string& meth, const string& path, const string& vers) {
         bool bad_opt = true;
         for(int i = 0; i < 4; i++) {
             if(path == options[i]) {
