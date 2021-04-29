@@ -29,7 +29,7 @@ class MethodReader {
     json all;
 
     //Prints out an error message if the request was invalid.
-    void bad_request(string vers) {
+    void bad_request(const string& vers) {
         cout << vers << " " << 400 << " Bad Request" << endl;
         cout << "Content-Type: application/json; charset=utf-8" << endl;
         cout << "Content-Length: 0" << endl;
