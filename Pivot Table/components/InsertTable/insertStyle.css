@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: white;
+  }
+  
+  .flexbox {
+    display: flex;
+    width: 100%;
+    max-width: 768px;
+    justify-content: space-between;
+    height: 75vh;
+    background-color: white;
+    overflow: hidden;
+  
+    margin: auto auto;
+    padding: 15px;
+  }
+
+.flexbox div {
+    /* align-content: center; */
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    background-color: purple;
+}
+
+.flexbox div .item {
+    background-color: white;
+    justify-content: space-around;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    max-width: 350;
+}
+
+.flexbox div p {
+    color: white;
+}

@@ -1,0 +1,51 @@
+.App {
+  text-align: center;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+}
+
+.flexContainer {
+  display: flex;
+  width: auto;
+  justify-content: space-around;
+  height: auto;
+  max-height: 350px;
+  background-color: white;
+  overflow: auto;
+
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.flexContainer .itemBox {
+  display: flex;
+  flex-flow: column wrap;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background-color: black;
+  width: auto;
+  padding: 15px;
+}
+
+.itemBox .item {
+  justify-content: space-around;
+}
+
+.flexContainer .itemBox p { 
+  color: white;
+}
+
+.flexContainer .itemBox .item {
+  background-color: white;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+}
