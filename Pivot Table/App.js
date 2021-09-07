@@ -1,7 +1,6 @@
 import React from 'react'
 import './stylesheet.css'
 import ItemBox from './components/ItemBox'
-/* import Type from './components/Type' */
 import InsertTable from './components/InsertTable/InsertTable'
 
 class App extends React.Component {
@@ -18,15 +17,6 @@ class App extends React.Component {
 
     this.setArr = this.setArr.bind(this);
   }
-
-  /*state = useState({
-    FileInserted: false,
-    dataRead: false,
-    ItemBoxes: [],
-    IndBox: [],
-    header: [],
-    Data: []
-  }); */
 
   readItemBoxes(fileId) {
     const Parser = require('papaparse');
@@ -59,11 +49,8 @@ class App extends React.Component {
     const arr = this.state.header.slice();
     var numData = [];
     const firstRow = this.state.Data[0];
-    console.log(firstRow)
     const specData = arr.reduce((result, elem) => {
       // Check if this header category describes the data
-      console.log('In arr.reduce loop');
-      console.log(elem);
       let firstDatS = firstRow[elem];
       let firstDatI = parseFloat(firstDatS);
       if((isNaN(firstDatI)) || (firstDatI.toString() !==  firstDatS) || (elem === 'Fiscal Year')) {
@@ -76,17 +63,10 @@ class App extends React.Component {
       return result;
     }, []);
 
-    console.log('Loop finished');
-
-    console.log(specData.length);
-    console.log(numData.length);
-
     this.setState({
       ItemBoxes: specData,
       IndBox: numData
     });
-
-    console.log('Set state successful');
   }
 
   changeInd(data) {
@@ -104,19 +84,15 @@ class App extends React.Component {
     this.setState({ Data: arr });
 }
 
+  // Called after csv file containing table data has been
+  // parsed. result is the table in the form of a double
+  // array.
   setArr(result) {
     const data = result.data;
     var ind = this.findHeader(data);
-    /* this.setState({ Data: data.slice(ind) });
-    this.partitionData();
-    this.changeInd(); */
-    console.log('found header');
     this.changeInd(data.slice(ind));
-    console.log('partitioning data');
     this.partitionData(data.slice(ind+1, ind+2));
-    console.log('Back in setArr function');
     this.setState({ dataRead: true });
-    console.log('Data Read');
   }
 
   // Returns the row index of an ItemBoxes element in the header
@@ -131,6 +107,8 @@ class App extends React.Component {
     }
   }
 
+  // Returns only the unique (no repeats) values of the column of
+  // this.state.Data with the given index.
   uniqueItems(index) {
     const name = this.state.ItemBoxes[index];
     let items = this.state.Data.map((e) => {

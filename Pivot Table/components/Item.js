@@ -16,24 +16,7 @@ function Item(props) {
         collect: monitor => ({
             isDragging: !!monitor.isDragging()
           })
-    },[]);
-
-
-    /* const dragIt = e => {
-        const target = e.target;
-
-        e.dataTransfer.setData('item_id', target.id);
-        e.dataTransfer.setData('item_type', props.type);
-        e.dataTransfer.setData('name', props.id);
-        
-        setTimeout(() => {
-            target.style.display = "none";
-        }, 0);
-    }
-
-    const moveOver = e => {
-        e.stopPropagation();
-    } */
+    }, [props.dragFunc]);
 
     return (
         <div
@@ -49,4 +32,3 @@ function Item(props) {
 }
 
 export default Item;
-/* export default DragSource([Type.Country, Type.Product], )(Item); */

@@ -1,26 +1,23 @@
 import React from 'react'
 import './tableStyle.css'
 
-class Table extends React.Component {
-    /* constructor(props) {
-        super(props);
-
-    } */
-    renderBlock() {
-        const span = this.props.rowMat.length.toString();
+function Table(props) {
+    
+    function renderBlock() {
+        const span = props.rowMat.length.toString();
         return (
             <td className='block' colSpan={span}>&nbsp;</td>
         );
     }
 
-    renderRowHeader(index, times) {
+    function renderRowHeader(index, times) {
         // Create an array that we can map through
         // and essentially render times number of times
-        const span = (this.props.timeLength * this.props.vals.length)/ (this.props.colMat[index].length * times);
+        const span = (props.timeLength * props.vals.length)/ (props.colMat[index].length * times);
         const str = span.toString();
         var arr = [...Array(times)];
         return arr.map(() => {
-            return this.props.colMat[index].map((col) => {
+            return props.colMat[index].map((col) => {
                 return(
                     <th key={col} colspan={str}>{col}</th>
                 );
@@ -28,28 +25,28 @@ class Table extends React.Component {
         });
     }
 
-    renderHeader() {
+    function renderHeader() {
         var times = 1;
-        return this.props.colMat.map((elem, index) => {
+        return props.colMat.map((elem, index) => {
             const befTime = times;
             times = times * elem.length;
             
             return (
                 <tr key={index}>
-                    {this.renderBlock()}
-                    {this.renderRowHeader(index, befTime)}
+                    {renderBlock()}
+                    {renderRowHeader(index, befTime)}
                 </tr>
             );
         });
     }
 
-    renderValHeader() {
-        if(this.props.vals.length > 0) {
+    function renderValHeader() {
+        if(props.vals.length > 0) {
             const span = 1;
             const str = span.toString();
-            var arr = [...Array(this.props.timeLength)];
+            var arr = [...Array(props.timeLength)];
             return arr.map(() => {
-                return this.props.vals.map((item) => {
+                return props.vals.map((item) => {
                     return(
                         <th key={item} colSpan={str}>{item}</th>
                     );
@@ -58,33 +55,33 @@ class Table extends React.Component {
         }
     }
 
-    renderSideHead(rarr) {
-        return this.props.rowMat.map((elem, ind) => {
+    function renderSideHead(rarr) {
+        return props.rowMat.map((elem, ind) => {
             return (
                 <th key={ind} colspan={'1'}>{elem[rarr[ind]]}</th>
             );
         });
     }
 
-    renderRow(row) {
-        if((this.props.rowMat.length > 0) && (this.props.colMat.length > 0) && (this.props.vals.length > 0)) {
-            var rarr = [...Array(this.props.rowMat.length)];
+    function renderRow(row) {
+        if((props.rowMat.length > 0) && (props.colMat.length > 0) && (props.vals.length > 0)) {
+            var rarr = [...Array(props.rowMat.length)];
             var rtimes = 1;
-            for(let i = this.props.rowMat.length - 1; i >= 0; i = i - 1) {
-                rarr[i] = Math.floor(row / rtimes) % this.props.rowMat[i].length;
-                rtimes = rtimes * this.props.rowMat[i].length;
+            for(let i = props.rowMat.length - 1; i >= 0; i = i - 1) {
+                rarr[i] = Math.floor(row / rtimes) % props.rowMat[i].length;
+                rtimes = rtimes * props.rowMat[i].length;
             }
 
             // Create an array of size timelength to map through when printing
             // the crossReff
-            var tarr = [...Array(this.props.timeLength * this.props.vals.length)];
+            var tarr = [...Array(props.timeLength * props.vals.length)];
 
             return (
                 <tr key={row}>
-                    {this.renderSideHead(rarr)}
+                    {renderSideHead(rarr)}
                     {tarr.map((e, ind) => {
                         return (
-                            <td key={ind}>{this.crossRef(rarr, ind)}</td>
+                            <td key={ind}>{crossRef(rarr, ind)}</td>
                         );
                     })}
                 </tr>
@@ -92,14 +89,14 @@ class Table extends React.Component {
         }
     }
 
-    dat(rarr, carr, val) {
-        var doub = this.props.data.slice();
+    function dat(rarr, carr, val) {
+        var doub = props.data.slice();
         rarr.forEach((elem, ind) => {
-            doub = doub.filter((e) => e[this.props.rowTypes[ind]] === this.props.rowMat[ind][elem]);
+            doub = doub.filter((e) => e[props.rowTypes[ind]] === props.rowMat[ind][elem]);
         });
 
         carr.forEach((elem, ind) => {
-            doub = doub.filter((e) => e[this.props.colTypes[ind]] === this.props.colMat[ind][elem]);
+            doub = doub.filter((e) => e[props.colTypes[ind]] === props.colMat[ind][elem]);
         });
 
 
@@ -111,25 +108,25 @@ class Table extends React.Component {
         return Math.round(ans * 100) / 100;
     }
 
-    crossRef(rarr, col) {
-        var carr = [...Array(this.props.colMat.length)];
-        var ctimes = this.props.vals.length;
-        for(let i = this.props.colMat.length - 1; i >= 0; i = i - 1) {
-            carr[i] = Math.floor(col / ctimes) % this.props.colMat[i].length;
-            ctimes = ctimes * this.props.colMat[i].length;
+    function crossRef(rarr, col) {
+        var carr = [...Array(props.colMat.length)];
+        var ctimes = props.vals.length;
+        for(let i = props.colMat.length - 1; i >= 0; i = i - 1) {
+            carr[i] = Math.floor(col / ctimes) % props.colMat[i].length;
+            ctimes = ctimes * props.colMat[i].length;
         }
 
-        const valInd = col  % this.props.vals.length;
-        const val = this.props.vals[valInd];
-        return this.dat(rarr, carr, val);
+        const valInd = col  % props.vals.length;
+        const val = props.vals[valInd];
+        return dat(rarr, carr, val);
     }
 
-    renderV() {
-        if(this.props.vals.length > 0) {
+    function renderV() {
+        if(props.vals.length > 0) {
             return (
                 <tr>
-                    {this.renderBlock()}
-                    {this.renderValHeader()}
+                    {renderBlock()}
+                    {renderValHeader()}
                 </tr>
             );
         }
@@ -138,21 +135,17 @@ class Table extends React.Component {
         }
     }
 
-    render() {
-        var arr = [...Array(this.props.numRows)];
-
-        return  (
-            <table id='data'>
-                <tbody>
-                    {this.renderHeader()}
-                    {this.renderV()}
-                    {arr.map((e, ind) => {
-                        return this.renderRow(ind);
-                    })}
-                </tbody>
-            </table>
-        );
-    }
+    return  (
+        <table id='data'>
+            <tbody>
+                {renderHeader()}
+                {renderV()}
+                {[...Array(props.numRows)].map((e, ind) => {
+                    return renderRow(ind);
+                })}
+            </tbody>
+        </table>
+    );
 }
 
 export default Table;

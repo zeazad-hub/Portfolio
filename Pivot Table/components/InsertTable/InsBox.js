@@ -6,11 +6,13 @@ import Item from '../Item'
 function InsBox(props) {
     const [, drop] = useDrop({
         accept: props.typeList,
-        drop: (item, monitor) => props.dropFunc(item, props.char),
+        drop: (item, monitor) => {
+            props.dropFunc(item, props.char)
+        },
         collect: monitor => ({
             isOver: !!monitor.isOver()
         })
-    }, []);
+    }, [props.typeList]);
 
     return (
         <div 
@@ -20,11 +22,11 @@ function InsBox(props) {
         >
             {props.children}
             {props.items.map((item) => {
-                var itype = 'values';
+                var itype = 'insvalues';
                 var iId;
 
                 if(props.char !== 'v') {
-                    itype = item.type;
+                    itype = 'ins' + item.type;
                     iId = item.id;
                 }
                 else {
